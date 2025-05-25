@@ -1,0 +1,75 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Lokale YaCy-API",
+    "version": "1.1.0",
+    "description": "YaCy-basierte lokale Websuche mit LLM-Integration über Ollama"
+  },
+  "servers": [
+    {
+      "url": "http://192.168.100.17:5055"
+    }
+  ],
+  "paths": {
+    "/suche-und-text": {
+      "get": {
+        "summary": "Suche nach Begriff und gib reinen Text zurück",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Text der Top-Seite",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query": { "type": "string" },
+                    "source_url": { "type": "string" },
+                    "text": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/suche-und-zusammenfassung": {
+      "get": {
+        "summary": "Suche und automatische Zusammenfassung via Gemma",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fertige Zusammenfassung des ersten Ergebnisses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query": { "type": "string" },
+                    "source_url": { "type": "string" },
+                    "summary": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
